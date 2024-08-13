@@ -351,7 +351,7 @@ To configure the agent to communicate to the service through a proxy server or t
 As of agent version 1.13, proxy settings can be configured using the `azcmagent config` command or system environment variables. If a proxy server is specified in both the agent configuration and system environment variables, the agent configuration will take precedence and become the effective setting. Use `azcmagent show` to view the effective proxy configuration for the agent.
 
 > [!NOTE]
-> Azure Arc-enabled servers doesn't support using proxy servers that require authentication, TLS (HTTPS) connections, or a [Log Analytics gateway](../../azure-monitor/agents/gateway.md) as a proxy for the Connected Machine agent.
+> Azure Arc-enabled servers doesn't support using a [Log Analytics gateway](../../azure-monitor/agents/gateway.md) as a proxy for the Connected Machine agent.
 
 ### Agent-specific proxy configuration
 
@@ -382,6 +382,14 @@ azcmagent config clear proxy.url
 ```
 
 You do not need to restart any services when reconfiguring the proxy settings with the `azcmagent config` command.
+
+### Authenticated proxy servers
+
+It is possible to configure an the agent to present a `Proxy-Authentication` header to a proxy which requires it by specifying the proxy URL as `http://username:password@ProxySeverFQDN:Port`. 
+This syntax works either when configuring the proxy via `azcmagent config set proxy.url` or when setting the environmnent variable `HTTPS_PROXY`.
+
+> [!NOTE]
+> The username and password are stored in plain text in the agent config file, or unencrypted in the operating system when setting the environment variable. 
 
 ### Proxy bypass for private endpoints
 
